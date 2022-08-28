@@ -1,8 +1,8 @@
 const Koa = require('koa');
-const app = new Koa();
+const rootRouter = require('./routes');
 
-app.use(async ctx => {
-  ctx.body = 'Initializing Server...' ;
-});
+const app = new Koa();
+app.use(rootRouter.routes());
+app.use(rootRouter.allowedMethods());
 
 module.exports = app;
