@@ -10,5 +10,10 @@ describe('server response', ()=>{
   it('should give a response of 200', async ()=>{
     const response = await request(server).get('/');
     expect(response.status).toBe(200);
-  })
+  });
+
+  it('should give a correct body response', async() => {
+    const response = await request(server).get('/');
+    expect(response.text).toStrictEqual('Hello there!');
+  });
 });
