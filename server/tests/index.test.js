@@ -11,4 +11,4 @@ describe('server response', ()=>{
     const response = await request(server).get('/');
     expect(response.status).toBe(200);
   })
-})
+});
