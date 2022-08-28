@@ -5,4 +5,4 @@ app.use(async ctx => {
   ctx.body = 'Initializing Server...' ;
 });
 
-app.listen (8000, 'localhost', _=> {console.log('Server running on port 8000...')});
+module.exports = app;
