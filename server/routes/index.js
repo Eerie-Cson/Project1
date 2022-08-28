@@ -2,7 +2,7 @@ const Router = require('koa-router');
 
 const router = new Router();
 
-router.get('/get', async ctx => {
+router.get('/', async ctx => {
   ctx.body = 'Hello there!';
 });
 
