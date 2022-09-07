@@ -1,6 +1,6 @@
 const Koa = require('koa');
 const rootRouter = require('./routes');
-const bodyParser = require('koa-body-parser');
+const bodyParser = require('koa-bodyparser');
 const Mongoose = require('mongoose');
 
 Mongoose.connect('mongodb://localhost:27017/Category');
