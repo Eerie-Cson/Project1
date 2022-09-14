@@ -1,5 +1,5 @@
 const Router = require('koa-router');
-const Items = require('../api');
+const Items = require('../../server');
 
 const router = new Router();
 
