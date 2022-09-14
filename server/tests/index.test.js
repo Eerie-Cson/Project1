@@ -1,10 +1,12 @@
 const request = require('supertest'); 
-const app = require('../index');
+const app = require('../server');
+const mongoose = require('mongoose');
 
 describe('server response', ()=>{
   const server = app.listen(8000);
-  afterAll(() => {
+  afterAll(async () => {
     server.close();
+    await mongoose.disconnect();
   });
 
   it('should give a response of 200', async ()=>{
