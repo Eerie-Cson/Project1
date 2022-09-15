@@ -7,5 +7,5 @@ const itemSchema = new Schema({
   price: Number
 }, {versionKey: false});
 
-const category = mongoose.model('items', itemSchema);
-module.exports = category;
+const itemModel = mongoose.model('items', itemSchema);
+module.exports = itemModel;
