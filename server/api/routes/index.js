@@ -9,6 +9,6 @@ router.get('/', async ctx => {
 });
 
 router.post('/items', async ctx => {
-  ctx.body = await items.createItem(ctx.request.body);
+  ctx.body = await items.createItem({ID, input: ctx.request.body});
 })
 module.exports = router;
