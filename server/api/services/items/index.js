@@ -1,5 +1,4 @@
 const items = require('./repository');
-// const ID = require('../../../lib/generate-data');
 class ItemServices {
   async createItem(data){
 
