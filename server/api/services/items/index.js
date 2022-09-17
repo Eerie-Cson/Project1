@@ -12,8 +12,8 @@ class ItemServices {
       }
     } 
 
-    const res = await items.create(product);
-    return res;
+    return await items.create(product);
+
   };
 };
 
