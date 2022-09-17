@@ -1,8 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const chance = new Chance()
-
 const itemSchema = new Schema({
   id: {
     type: String,
