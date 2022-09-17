@@ -5,14 +5,14 @@ const Schema = mongoose.Schema;
 const chance = new Chance()
 
 const itemSchema = new Schema({
-  _id: {
+  id: {
     type: String,
     unique: true,
-    default: chance.String()
+    default: chance.string({length: 8, alpha: true, numeric: true, casing: 'upper'}),
   },
   item: {
     type: String,
-    required: true,
+    require: true
   },
   stock: {
     type: Number,
