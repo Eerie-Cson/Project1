@@ -1,30 +1,33 @@
-const Item = require('../../model/item');
 const ItemServices = require('../items');
-const { Chance } = require('chance');
+const R = require('ramda');
+const ItemRepository = require('../items/repository')
+const product = require('../../../lib/generate-data')
 
-const chance = new Chance();
-const item = new ItemServices();
+const items = new ItemServices();
 
 afterEach(() => {
   jest.clearAllMocks();
-})
+});
+
 describe('ItemServices', () => {
   describe('#createDepartment', () => {
     it('should create new department', async() => {
       
-      const data = {
-        item: chance.word(),
-        stock: chance.natural(),
-        price: chance.floating({fixed: 2}),
-      }
-
-      Item.create = jest.fn().mockImplementation(() => data);
+      const itemData = {
+        id: product.ID,
+        input: R.omit(['ID'])(product)
+      };
       
-      const result = await item.createItem(data);
+      ItemRepository.create = jest.fn().mockReturnValue({
+        id: itemData.id,
+        data: itemData.input
+      });
+
+      const result = await items.createItem(itemData);
 
       expect(result).toBeDefined();
-      expect(Item.create).toBeCalled();
-      expect(result).toStrictEqual(data);
+      expect(result).toStrictEqual({id: itemData.id, data: itemData.input});
+      expect(ItemRepository.create).toBeCalled();
     })
   })
 })
