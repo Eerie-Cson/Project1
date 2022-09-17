@@ -1,4 +1,3 @@
-const { Chance } = require('chance');
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
@@ -8,7 +7,7 @@ const itemSchema = new Schema({
   id: {
     type: String,
     unique: true,
-    default: chance.string({length: 8, alpha: true, numeric: true, casing: 'upper'}),
+    required: true,
   },
   item: {
     type: String,
