@@ -7,10 +7,12 @@ class Repository {
     return this.model;
   }
 
-  async create(data) {
-    const result = await this.model.create(data);
+  async create(product) {
+    
+    const {id, data} = product
+    const result = await this.model.create({...data, id});
 
-    const {_id, ...res} = result;
+    const {_id, ...res} = result.toObject();
     return res;
   }
 }
