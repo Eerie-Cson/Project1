@@ -1,8 +1,16 @@
-const items = require('../../model/item');
+const items = require('./repository');
+const ID = require('../../../lib/generate-id');
 class ItemServices {
-  async createItem({item, stock, price}){ 
-    const product = await items.create({item, stock, price});
-    return product;
+  async createItem({item, stock, price}){
+
+    const product = {
+      ID,
+      item,
+      stock,
+      price
+    } 
+
+    return await items.create(product);
   };
 };
 
