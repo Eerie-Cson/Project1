@@ -8,5 +8,5 @@ const app = new Koa();
 app.use(bodyParser());
 app.use(rootRouter.routes()).use(rootRouter.allowedMethods());
 
-app.listen(3000, () => console.log('running...'));
+// app.listen(3000, () => console.log('running...'));
 module.exports = app;
