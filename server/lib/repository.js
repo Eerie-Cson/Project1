@@ -5,16 +5,19 @@ class Repository {
 
   getModel() {
     return this.model;
-  }
+  };
 
-  async create(product) {
+  async create(params) {
     
-    const {id, data} = product
+    const { data } = params;
     const result = await this.model.create({...data, id});
 
-    const {_id, ...res} = result.toObject();
-    return res;
-  }
+    const {_id, id, ...res} = result.toObject();
+    return {
+      id: id,
+      data: res
+    };
+  };
 }
 
 module.exports = Repository;
