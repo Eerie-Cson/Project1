@@ -7,16 +7,19 @@ class Repository {
     return this.model;
   };
 
+  returnValue ({_id, id, ...res}) {
+    return {
+      id: id,
+      data: res
+    }
+  }
+
   async create(params) {
     
     const { data } = params;
     const result = await this.model.create({...data, id: params.id});
+    return this.returnValue(result.toObject());
 
-    const {_id, id, ...res} = result.toObject();
-    return {
-      id: id,
-      data: res
-    };
   };
 }
 
