@@ -30,6 +30,7 @@ describe('ItemServices', () => {
       expect(result).toBeDefined();
       expect(result).toStrictEqual({id: itemData.id, data: itemData.input});
       expect(ItemRepository.create).toBeCalled();
+      expect(ItemRepository.exists).toBeCalledTimes(1);
     })
   })
 })
