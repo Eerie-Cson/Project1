@@ -10,14 +10,16 @@ afterEach(() => {
 });
 
 describe('ItemServices', () => {
-  describe('#createDepartment', () => {
-    it('should create new department', async() => {
+  describe('#createItem', () => {
+    it('should create new item', async() => {
       
       const itemData = {
         id: product.ID,
-        input: R.omit(['ID'])(product)
+        data: R.omit(['ID'])(product)
       };
-      
+
+      ItemRepository.exists = jest.fn();
+
       ItemRepository.create = jest.fn().mockReturnValue({
         id: itemData.id,
         data: itemData.input
@@ -28,6 +30,7 @@ describe('ItemServices', () => {
       expect(result).toBeDefined();
       expect(result).toStrictEqual({id: itemData.id, data: itemData.input});
       expect(ItemRepository.create).toBeCalled();
+      expect(ItemRepository.exists).toBeCalledTimes(1);
     })
   })
 })
