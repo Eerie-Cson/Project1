@@ -2,7 +2,8 @@ const request = require('supertest');
 const app = require('../../server');
 const mongoose = require('mongoose');
 const itemModel = require('../model/item');
-const product = require('../../lib/generate-data')
+const product = require('../../lib/generate-data');
+const { ID } = require('../../lib/generate-data');
 
 beforeAll(async()=>{
   server = app.listen(3000);
@@ -22,12 +23,12 @@ afterAll(async () => {
 
 describe('CreateItem endpoint', () => {
   it('should create new item', async () => {
-
-    const {ID, ...input } = product;
-    const response = await request(server).post('/items').send(input);
-
-    expect(response.statusCode).toBe(200);
-    expect(response.body.id).toBeDefined();
-    expect(response.body.data).toStrictEqual(input);
-  })
+    
+      const {ID, ...data } = product;
+      const response = await request(server).post('/items').send(data);
+    
+      expect(response.statusCode).toBe(200);
+      expect(response.body.id).toBeDefined();
+      expect(response.body.data).toStrictEqual(data);
+    });
 })
