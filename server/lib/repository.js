@@ -20,6 +20,13 @@ class Repository {
     return this.returnValue(result.toObject());
   };
 
+  async exists(params) {
+    const found = await this.find(params);
+    if(found.length === 0 ) return false
+    return true 
+  }
+
+
   async find(params) {
     const result = await this.model.find(params);
     return result;
