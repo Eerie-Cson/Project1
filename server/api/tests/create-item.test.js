@@ -30,7 +30,7 @@ describe('CreateItem endpoint', () => {
   it('should create new item', async () => {
   
     const {ID, ...data } = product;
-    const response = await request(server).post('/items').send(data);
+    const response = await request(server).post('/create/items').send(data);
   
     expect(response.statusCode).toBe(200);
     expect(response.body.id).toBeDefined();
@@ -53,7 +53,7 @@ describe('CreateItem endpoint', () => {
 
     await itemRepository.createItem(input);
 
-    const response = await request(server).post('/items').send(data);
+    const response = await request(server).post('/create/items').send(data);
 
     expect(response.body).toStrictEqual({Error: 'Item already exist'});  
   })
