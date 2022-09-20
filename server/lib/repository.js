@@ -29,7 +29,10 @@ class Repository {
 
   async find(params) {
     const result = await this.model.find(params);
-    return result;
+
+    return result.map((obj) => {
+      return this.returnValue(obj.toObject())
+    });
   }
 }
 
