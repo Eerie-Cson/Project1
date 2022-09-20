@@ -19,6 +19,10 @@ class ItemServices {
     return await items.create(product);
 
   };
+
+  async displayItems() {
+    return await items.find({});
+  }
 };
 
 module.exports = ItemServices;
