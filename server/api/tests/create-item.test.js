@@ -1,17 +1,16 @@
 const request = require('supertest'); 
 const mongoose = require('mongoose');
 const itemModel = require('../model/item');
-const { Chance } = require('chance');
+const R = require('ramda');
 
 const ItemRepository = require('../../api/services/items/index');
 const app = require('../../server');
 const product = require('../../lib/generate-data');
-const { ID } = require('../../lib/generate-data');
 
 const itemRepository = new ItemRepository();
 
 beforeAll(async()=>{
-  server = app.listen(3000);
+  server = app.listen(2000);
   await mongoose.disconnect();
   await mongoose.connect('mongodb://localhost:27017/test_db');
   await itemModel.deleteMany({});
@@ -29,7 +28,8 @@ afterAll(async () => {
 describe('CreateItem endpoint', () => {
   it('should create new item', async () => {
   
-    const {ID, ...data } = product;
+    const item = product().once();
+    const {ID, ...data } = item;
     const response = await request(server).post('/create/items').send(data);
   
     expect(response.statusCode).toBe(200);
@@ -38,22 +38,25 @@ describe('CreateItem endpoint', () => {
   });
   
   it('should return error message', async() => {
-      
-    const chance = new Chance();
-    const {ID, ...data } = product;
+
+    const items = product().times(2)
+    const [item1, item2] = items
     
-    const input = {
-      ID: product.ID,
+    const product1 = {
+      ID: item1.ID,
       data: {
-        item: product.item,
-        stock: chance.natural({min: 1, max: 5000}),
-        price: chance.floating({min: 1, max: 5000, fixed: 2}),
+        item: item1.item,
+        stock: item1.stock,
+        price: item1.price
       }
     };
 
-    await itemRepository.createItem(input);
+    await itemRepository.createItem(product1);
 
-    const response = await request(server).post('/create/items').send(data);
+    const response = await request(server).post('/create/items').send({
+      ...R.omit(['ID'])(item2),
+      item: item1.item
+    });
 
     expect(response.body).toStrictEqual({Error: 'Item already exist'});  
   })
