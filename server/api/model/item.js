@@ -9,7 +9,7 @@ const itemSchema = new Schema({
   },
   item: {
     type: String,
-    require: true
+    required: true
   },
   stock: {
     type: Number,
@@ -17,7 +17,7 @@ const itemSchema = new Schema({
   },
   price:{ 
     type: Number,
-    defualt: 0.00
+    default: 0.00
   }
 }, {versionKey: false});
 
