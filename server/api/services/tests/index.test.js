@@ -48,5 +48,38 @@ describe('ItemServices', () => {
       expect(ItemRepository.create).toHaveBeenCalledTimes(3)
     })
   });
- 
+
+  describe('#displayItems', ()=> {
+    it('should get all items from database', async () => {
+      const items = product().times(3);
+
+      ItemRepository.find = jest.fn().mockReturnValue(items.map((item) => {
+        const id = item.ID;
+        const data = R.omit(['ID'])(item)
+        return {
+          id,
+          data
+        }
+      }));
+      ItemRepository.create = jest.fn()
+
+      await Promise.all([ 
+        items.map( (item) => itemServices.createItem({
+            id: item.id,
+            data: R.omit(['ID'])(item)
+        })),
+      ]);
+      
+      const found = await itemServices.displayItems({});
+
+      expect(found).toStrictEqual(items.map((item) => {
+        const id = item.ID;
+        const data = R.omit(['ID'])(item)
+        return {
+          id,
+          data
+        }
+      }));
+    })
+  })
 })
