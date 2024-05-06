@@ -34,6 +34,16 @@ class Repository {
       return this.returnValue(obj.toObject())
     });
   }
+
+  async updateOne(params) {
+    await this.model.updateOne({id: params.id},{$set: params.data });
+    return params.id;
+  }
+
+  // async deleteAll() {
+  //   await this.model.deleteMany({});
+  //   return true;
+  // }
 }
 
 module.exports = Repository;

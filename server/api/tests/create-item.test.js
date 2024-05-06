@@ -4,16 +4,16 @@ const itemModel = require('../model/item');
 const R = require('ramda');
 
 const ItemRepository = require('../../api/services/items/index');
-const app = require('../../server');
-const product = require('../../lib/generate-data');
+const app = require('../../app');
+const product = require('../../helpers/generate-data');
 
 const itemRepository = new ItemRepository();
 
+let server;
+
 beforeAll(async()=>{
   server = app.listen(2000);
-  await mongoose.disconnect();
-  await mongoose.connect('mongodb://localhost:27017/test_db');
-  await itemModel.deleteMany({});
+  await mongoose.createConnection('mongodb://localhost:27017/test_db');
 });
 
 afterEach(async () => {
