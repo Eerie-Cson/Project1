@@ -1,7 +1,7 @@
 const ItemServices = require('../items');
 const R = require('ramda');
 const ItemRepository = require('../items/repository')
-const product = require('../../../lib/generate-data')
+const product = require('../../../helpers/generate-data')
 
 const itemServices = new ItemServices();
 
@@ -61,16 +61,8 @@ describe('ItemServices', () => {
           data
         }
       }));
-      ItemRepository.create = jest.fn()
-
-      await Promise.all([ 
-        items.map( (item) => itemServices.createItem({
-            id: item.id,
-            data: R.omit(['ID'])(item)
-        })),
-      ]);
       
-      const found = await itemServices.displayItems({});
+      const found = await itemServices.displayItems();
 
       expect(found).toStrictEqual(items.map((item) => {
         const id = item.ID;
@@ -81,5 +73,21 @@ describe('ItemServices', () => {
         }
       }));
     })
+  })
+
+  describe('#updateItem', ()=> {
+    it('should update correct item', async () => {
+      const item = product().once();
+      ItemRepository.exists = jest.fn().mockReturnValue(true);
+      ItemRepository.updateOne = jest.fn().mockReturnValue(item.ID);
+
+      const updated = await itemServices.updateItem(item.ID, {item: item.item});
+      
+      expect(updated).toEqual(true);
+      expect(ItemRepository.updateOne).toBeCalled();
+    })
+
+
+    
   })
 })
